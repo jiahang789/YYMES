@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.yymes.mapper.exceptionAllMapper">
+
+    <resultMap id="getListUser" type="com.example.yymes.entity.User">
+        <result column="id" property="Id" javaType="String"></result>
+        <result column="name" property="Name" javaType="String"></result>
+    </resultMap>
+    <select id="getExceptionAll" parameterType="Map" resultType="com.example.yymes.entity.ExceptionAll">
+        select top ${pageSize} * from ExceptionAll where id not in (select top ((${pageNum}-1) * ${pageSize}) id from ExceptionAll)
+    </select>
+    <select id="getExceptionAllCount" resultType="Int">
+        select  count(1) from ExceptionAll
+    </select>
+    <delete id="DeleteId" parameterType="com.example.yymes.entity.ExceptionSetting">
+        delete FROM ExceptionSetting where id = #{Id}
+    </delete>
+
+</mapper>
